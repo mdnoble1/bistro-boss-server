@@ -51,13 +51,15 @@ async function run() {
     })
 
 
-    // get all food cart data from database 
+    // get all food cart data from database by querying user email 
     app.get('/carts' , async(req, res ) => {
-      const result = await cartCollection.find().toArray();
+      const email = req.query.email;
+      const query = { email : email }
+      const result = await cartCollection.find(query).toArray();
       res.send(result);
     })
 
-    
+
     // add a food in cart in database 
     app.post('/carts' , async(req, res) => {
       const cartItem = req.body;
