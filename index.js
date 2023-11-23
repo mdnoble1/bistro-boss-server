@@ -50,6 +50,14 @@ async function run() {
         res.send(result);
     })
 
+
+    // get all food cart data from database 
+    app.get('/carts' , async(req, res ) => {
+      const result = await cartCollection.find().toArray();
+      res.send(result);
+    })
+
+    
     // add a food in cart in database 
     app.post('/carts' , async(req, res) => {
       const cartItem = req.body;
