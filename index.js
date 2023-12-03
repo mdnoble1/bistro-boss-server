@@ -65,6 +65,18 @@ async function run() {
     // creating a new user api in database 
     app.post('/users', async(req, res) => {
       const user = req.body;
+
+
+      // checking if user already exist in database 
+      // we can do it in many ways (1. user email unique , 2. upsert , 3. making a field unique in db such as email)
+
+      const query = {email: user.email};
+      const existingUser = await userCollection.findOne(query);
+
+      if(existingUser){
+        return;
+      }
+
       const result = await userCollection.insertOne(user);
       res.send(result);
     })
