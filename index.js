@@ -51,6 +51,12 @@ async function run() {
         res.send(result);
     })
 
+    // get all users from database 
+    app.get('/users', async(req, res) => {
+      const result = await userCollection.find().toArray();
+      res.send(result);
+    })
+
 
     // get all food cart data from database by querying user email 
     app.get('/carts' , async(req, res ) => {
@@ -74,7 +80,7 @@ async function run() {
       const existingUser = await userCollection.findOne(query);
 
       if(existingUser){
-        return;
+        return res.send({message: 'user already exist in database', insertedId: null})
       }
 
       const result = await userCollection.insertOne(user);
