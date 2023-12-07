@@ -39,6 +39,16 @@ async function run() {
     const userCollection = client.db("bistroDB").collection("users");
 
 
+    // jwt related api 
+    app.post('/jwt', async(req, res) => {
+      // payload 
+      const user = req.body;
+
+      const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '1h'})
+      res.send({ token });
+    })
+
+
 
     // get all menu from database 
     app.get('/menu' , async(req, res ) => {
